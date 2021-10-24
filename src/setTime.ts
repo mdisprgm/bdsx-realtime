@@ -46,7 +46,6 @@ command
                     );
                     fs.writeFileSync(REALTIME_TXT, "false");
                     op.success("Realtime is §cdisabled");
-                    level.setTime(500);
                     break;
             }
         },
