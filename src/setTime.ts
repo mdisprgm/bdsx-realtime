@@ -28,28 +28,27 @@ events.serverStop.on(() => {
     clearInterval(setTime);
 });
 
-command
-    .register("realtime", "realtime on/off", CommandPermissionLevel.Operator)
-    .overload(
-        async (p, o, op) => {
-            switch (p.swt) {
-                case "on":
-                    bedrockServer.executeCommand(
-                        `gamerule dodaylightcycle false`
-                    );
-                    fs.writeFileSync(REALTIME_TXT, "true");
-                    op.success("Realtime is §aenabled");
-                    break;
-                case "off":
-                    bedrockServer.executeCommand(
-                        `gamerule dodaylightcycle true`
-                    );
-                    fs.writeFileSync(REALTIME_TXT, "false");
-                    op.success("Realtime is §cdisabled");
-                    break;
-            }
-        },
-        {
-            swt: command.enum("RealTimeSwitch", "on", "off"),
+const cmd_realtime = command.register(
+    "realtime",
+    "realtime on/off",
+    CommandPermissionLevel.Operator
+);
+cmd_realtime.overload(
+    async (p, o, op) => {
+        switch (p.swt) {
+            case "on":
+                bedrockServer.executeCommand(`gamerule dodaylightcycle false`);
+                fs.writeFileSync(REALTIME_TXT, "true");
+                op.success("Realtime is §aenabled");
+                break;
+            case "off":
+                bedrockServer.executeCommand(`gamerule dodaylightcycle true`);
+                fs.writeFileSync(REALTIME_TXT, "false");
+                op.success("Realtime is §cdisabled");
+                break;
         }
-    );
+    },
+    {
+        swt: command.enum("RealTimeSwitch", "on", "off"),
+    }
+);
