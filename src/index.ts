@@ -1,6 +1,7 @@
 import { events } from "bdsx/event";
-import { latitude, longitude } from "../config.json";
+import { location } from "../config.json";
 import fs = require("fs");
+import { red } from "colors";
 
 export const REALTIME_TXT = "./realtime.txt";
 if (!fs.existsSync(REALTIME_TXT)) {
@@ -8,7 +9,21 @@ if (!fs.existsSync(REALTIME_TXT)) {
 }
 
 events.serverOpen.on(() => {
-    if (!latitude) return console.log(new Error(`latitude is not set!`));
-    if (!longitude) return console.log(new Error(`longitude is not set!`));
-    import(`./setTime`);
+    import(`./config`);
+    setTimeout(() => {
+        const { location } = require(`../plugins/realtime/config.json`);
+        if (!location.latitude)
+            return console.log(
+                red(
+                    `[Realtime] Latitude is not correct. Please modify the config file and run the server again.`
+                )
+            );
+        if (!location.longitude)
+            return console.log(
+                red(
+                    `[Realtime] Longitude is not correct. Please modify the config file and run the server again.`
+                )
+            );
+        import(`./setTime`);
+    }, 100);
 });

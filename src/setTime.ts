@@ -6,16 +6,19 @@ import fs = require("fs");
 import { REALTIME_TXT } from ".";
 import { command } from "bdsx/command";
 import { CommandPermissionLevel } from "bdsx/bds/command";
+import { GameRuleId } from 'bdsx/bds/gamerules';
 
 function isTrue(s: string) {
     return s !== "false";
 }
 const level = serverInstance.minecraft.getLevel();
 
+serverInstance.minecraft.getLevel().getGameRules().getRule(GameRuleId.DoDaylightCycle).setValue(false)
+
 const setTime = setInterval(() => {
     const enabled = fs.readFileSync(REALTIME_TXT, "utf8");
     if (isTrue(enabled)) {
-        level.setTime(0);
+        level.setTime(0);   
         timeAdapter.updateTimeAdapter();
         const tick = timeAdapter.getCurrentTick();
         if (timeAdapter.lastTick !== tick) {
