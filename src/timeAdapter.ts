@@ -1,4 +1,4 @@
-import { location } from '../../../plugins_data/realtime/config.json';
+import { location } from '../config.json';
 import * as suncalc from 'suncalc';
 
 const { latitude, longitude } = location
@@ -36,15 +36,15 @@ export namespace timeAdapter {
         const time = date.getTime()
         let sunrise = suncalc.getTimes(date, latitude, longitude).sunrise
         let sunset = suncalc.getTimes(date, latitude, longitude).sunset
-    
+
         if (time < sunrise.getTime()) {
             date.setDate(date.getDate() - 1)
             sunset = suncalc.getTimes(date, latitude, longitude).sunset
             return timeAdapter(sunset, sunrise, type.night);
         }
-    
+
         if (time < sunset.getTime()) return timeAdapter(sunrise, sunset, type.day);
-    
+
         date.setDate(date.getDate() + 1)
         sunrise = suncalc.getTimes(date, latitude, longitude).sunrise
         timeAdapter(sunset, sunrise, type.night)
