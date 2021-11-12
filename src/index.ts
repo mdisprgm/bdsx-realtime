@@ -11,7 +11,7 @@ if (!fs.existsSync(REALTIME_TXT)) {
 events.serverOpen.on(() => {
     import(`./config`);
     setTimeout(() => {
-        const { location } = require(`../plugins/realtime/config.json`);
+        const { location } = require(`../config.json`);
         if (!location.latitude)
             return console.log(
                 red(
