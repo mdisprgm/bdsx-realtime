@@ -13,6 +13,7 @@
         "prepare": "tsc || exit 0"
     },
     "devDependencies": {
+        "@types/suncalc": "^1.8.1",
         "bdsx": "file:../bdsx"
     },
     "dependencies": {
